@@ -1,5 +1,7 @@
 # TSG Participant Monitor
 
+Demo: https://bertt.github.io/dataspace-realtime-client/
+
 A small, framework-free web client for GitHub Pages that:
 
 - asks for a participant-specific `host`, `client id`, and `client secret` at runtime
