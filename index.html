@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSG Participant Messages</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="page-header">
+    <div class="page-intro">
+      <p class="eyebrow">TSG dataspace client</p>
+      <h1>Participant message monitor</h1>
+      <p class="page-summary">
+        Connect with runtime credentials, save session-only participant hosts,
+        and review timestamped messages in one place.
+      </p>
+    </div>
+
+    <section class="status-panel" aria-live="polite" aria-label="Connection status">
+      <span id="status-dot" class="status-dot" data-kind="disconnected" aria-hidden="true"></span>
+      <p id="status-text" class="status-text">Not connected</p>
+    </section>
+  </header>
+
+  <main id="main-content" class="layout">
+    <section class="panel panel--sidebar" aria-labelledby="profile-panel-title">
+      <div class="panel-heading">
+        <h2 id="profile-panel-title">Connection setup</h2>
+        <p>Saved hosts stay in this browser session only and are never hardcoded in the page.</p>
+      </div>
+
+      <div class="selector-block">
+        <label class="field-label" for="profile-select">Saved hosts</label>
+        <select id="profile-select" class="input" aria-describedby="profile-select-help">
+          <option value="">No saved hosts yet</option>
+        </select>
+        <p id="profile-select-help" class="field-help">
+          Choose a saved participant host to switch quickly.
+        </p>
+      </div>
+
+      <form id="login-form" class="form" novalidate>
+        <div class="field-grid">
+          <input
+            id="profile-name-input"
+            name="profileName"
+            type="hidden"
+            autocomplete="off"
+          >
+
+          <div class="field">
+            <label class="field-label" for="host-input">Participant host</label>
+            <input
+              id="host-input"
+              class="input"
+              name="host"
+              type="text"
+              inputmode="url"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="participant.example.org"
+              aria-describedby="host-input-help"
+              required
+            >
+            <p id="host-input-help" class="field-help">
+              Enter the full participant host, for example
+              <code>participant.example.org</code>. If you leave off the protocol, the app uses
+              HTTPS automatically.
+            </p>
+          </div>
+
+          <label class="field" for="client-id-input">
+            <span class="field-label">Client ID</span>
+            <input
+              id="client-id-input"
+              class="input"
+              name="clientId"
+              type="text"
+              autocomplete="off"
+              placeholder="Enter the client identifier"
+              required
+            >
+          </label>
+
+          <label class="field" for="client-secret-input">
+            <span class="field-label">Client secret</span>
+            <input
+              id="client-secret-input"
+              class="input"
+              name="clientSecret"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Enter the client secret"
+              required
+            >
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="save-profile-button" class="button button--secondary" type="button">
+            Save host
+          </button>
+          <button id="connect-button" class="button" type="submit">
+            Connect
+          </button>
+          <button id="disconnect-button" class="button button--ghost" type="button" disabled>
+            Disconnect
+          </button>
+        </div>
+      </form>
+
+      <p class="security-note">
+        The client secret stays masked on screen. Use secure HTTPS hosts only.
+      </p>
+
+      <div id="error-banner" class="error-banner" role="alert" hidden></div>
+      <div id="runtime-warning" class="warning-banner" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <section class="panel panel--content" aria-labelledby="messages-panel-title">
+      <div class="panel-heading panel-heading--split">
+        <div>
+          <h2 id="messages-panel-title">Message history</h2>
+          <p>Incoming participant messages appear here with your local date and time.</p>
+        </div>
+
+        <button id="clear-messages-button" class="button button--secondary" type="button">
+          Clear messages
+        </button>
+      </div>
+
+      <div class="message-shell">
+        <p id="empty-state" class="empty-state">
+          No messages yet. Connect to a participant host to start receiving updates.
+        </p>
+        <ul id="message-list" class="message-list" aria-live="polite" aria-relevant="additions text"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
